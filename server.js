@@ -3,6 +3,7 @@ const express = require('express');
 const dotev = require('dotenv');
 dotev.config({path: './config/config.env'});
 const helmet = require('helmet');
+const morgan = require('morgan');
 const colors = require('colors');
 const connectDB = require('./config/db');
 
@@ -12,6 +13,10 @@ connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+
+if(process.env.NODE_ENV === 'development'){
+  app.use(morgan('dev'));
+}
 
 app.use(helmet());
 
