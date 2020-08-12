@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server",
     "server": "nodemon server",
-    "dev": "concurrently \"npm run server\" \"npm run client --prefix client\""
+    "dev": "concurrently \"npm run server\" \"npm run start --prefix client\""
   },
   "keywords": [],
   "author": "Will Koste",
