@@ -5,15 +5,11 @@ import {v4 as uuidv4} from 'uuid';
 
 const ShoppingList = () => {
   const [items, setItems] = useState([
-    {id: 1, name: 'Steak'},
-    {id: 2, name: 'Tree Soup'},
-    {id: 3, name: 'Button Baby'},
-    {id: 4, name: 'Serious Steven'}
+    {id: uuidv4(), name: 'Steak'},
+    {id: uuidv4(), name: 'Tree Soup'},
+    {id: uuidv4(), name: 'Button Baby'},
+    {id: uuidv4(), name: 'Serious Steven'}
   ]);
-
-  const deleteItem = () => {
-    setItems(items.filter(item => item.id !== item.id))
-  }
   
   return (
     <Fragment>
