@@ -50,8 +50,4 @@ ItemModal.propTypes = {
   addItem: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = state => ({
-  item: state.item
-});
-
-export default connect(mapStateToProps, {addItem})(ItemModal);
+export default connect(null, {addItem})(ItemModal);
