@@ -1,13 +1,9 @@
 import {GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEM_ERROR} from '../actions/types';
-import {v4 as uuidv4} from 'uuid';
 
 const initialState = {
-  items: [
-    // {id: uuidv4(), name: 'Steak'},
-    // {id: uuidv4(), name: 'Tree Soup'},
-    // {id: uuidv4(), name: 'Button Baby'},
-    // {id: uuidv4(), name: 'Serious Steven'}
-  ]
+  items: [],
+  loading: true,
+  error: null
 };
 
 export default function(state = initialState, action){
@@ -17,12 +13,26 @@ export default function(state = initialState, action){
     case GET_ITEMS:
       return {
         ...state,
-        items: payload
+        items: payload,
+        loading: false
+      }
+    case ADD_ITEM:
+      return {
+        ...state,
+        loading: false,
+        logs: [payload, ...state.payload]
       }
     case DELETE_ITEM:
       return {
         ...state,
-        items: state.items.filter(i => i._id !== payload)
+        items: state.items.filter(i => i._id !== payload),
+        loading: false
+      }
+    case ITEM_ERROR:
+      return {
+        ...state,
+        loading: false,
+        err: payload
       }
     default:
       return state;

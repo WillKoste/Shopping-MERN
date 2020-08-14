@@ -12,14 +12,13 @@ export const getItems = () => async dispatch => {
   } catch (err) {
     dispatch({
       type: ITEM_ERROR,
-      payload: {msg: err.response.statusText, status: err.response.status}
+      payload: {msg: err.response}
     });
   }
 }
 
 export const deleteItem = (id) => async dispatch => {
-  console.log(id);
-  const res = await axios.delete(`http://localhost:5005/api/items/${id}`);
+  await axios.delete(`http://localhost:5005/api/items/${id}`);
   
   try {
     dispatch({
@@ -29,7 +28,29 @@ export const deleteItem = (id) => async dispatch => {
   } catch (err) {
     dispatch({
       type: ITEM_ERROR,
-      payload: {msg: err.response.statusText, status: err.response.status}
+      payload: {msg: err.response}
+    });
+  }
+}
+
+export const addItem = (data) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    const res = await axios.post('/api/items', data, config)
+
+    dispatch({
+      type: ADD_ITEM,
+      payload: res.data.data
+    });
+  } catch (err) {
+    dispatch({
+      type: ITEM_ERROR,
+      payload: {msg: err.response}
     });
   }
 }

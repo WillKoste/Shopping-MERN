@@ -1,7 +1,7 @@
 import React, {useEffect, Fragment} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types'
-import {Container, ListGroup, ListGroupItem, Button} from 'reactstrap';
+import {Container, ListGroup, ListGroupItem, Button, Spinner} from 'reactstrap';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {getItems, deleteItem} from '../../actions/item';
 
@@ -21,7 +21,7 @@ const ShoppingList = ({item, getItems, deleteItem}) => {
       <Container>
         <Button color="dark" style={{marginBottom:'2rem'}}>Add Item</Button>
         <ListGroup>
-          <TransitionGroup className="shopping-list">
+          {item.loading ? <Spinner className="m-auto" /> : <TransitionGroup className="shopping-list">
             {items.map(({_id, name}) => (
               <CSSTransition key={_id} timeout={500} classNames="fade">
                 <ListGroupItem>
@@ -30,7 +30,7 @@ const ShoppingList = ({item, getItems, deleteItem}) => {
                 </ListGroupItem>
               </CSSTransition>
             ))}
-          </TransitionGroup>
+          </TransitionGroup>}
         </ListGroup>
       </Container>
     </Fragment>
