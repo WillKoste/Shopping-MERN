@@ -5,6 +5,8 @@ export const getItems = () => async dispatch => {
   try {
     const res = await axios.get('http://localhost:5005/api/items');
 
+    console.log(res.data.data);
+
     dispatch({
       type: GET_ITEMS,
       payload: res.data.data
@@ -33,7 +35,7 @@ export const deleteItem = (id) => async dispatch => {
   }
 }
 
-export const addItem = (data) => async dispatch => {
+export const addItem = (item, history, edit = false) => async dispatch => {
   try {
     const config = {
       headers: {
@@ -41,7 +43,11 @@ export const addItem = (data) => async dispatch => {
       }
     }
 
-    const res = await axios.post('/api/items', data, config)
+    const res = await axios.post('http://localhost:5005/api/items', item, config)
+
+    if(!edit){
+      history.push('/');
+    }
 
     dispatch({
       type: ADD_ITEM,

@@ -19,7 +19,6 @@ const ShoppingList = ({item, getItems, deleteItem}) => {
   return (
     <Fragment>
       <Container>
-        <Button color="dark" style={{marginBottom:'2rem'}}>Add Item</Button>
         <ListGroup>
           {item.loading ? <Spinner className="m-auto" /> : <TransitionGroup className="shopping-list">
             {items.map(({_id, name}) => (

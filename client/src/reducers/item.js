@@ -20,7 +20,7 @@ export default function(state = initialState, action){
       return {
         ...state,
         loading: false,
-        logs: [payload, ...state.payload]
+        logs: [payload, ...state.items]
       }
     case DELETE_ITEM:
       return {

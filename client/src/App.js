@@ -6,13 +6,17 @@ import store from './store';
 
 import AppNavbar from './components/layout/AppNavbar';
 import ShoppingList from './components/layout/ShoppingList';
+import ItemModal from './components/filler/ItemModal';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <div>
+      <div className="App">
         <AppNavbar />
-        <ShoppingList />
+        <div className="container">
+          <ItemModal />
+          <ShoppingList />
+        </div>
       </div>
     </Provider>
   );
