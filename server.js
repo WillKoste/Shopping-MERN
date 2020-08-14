@@ -24,6 +24,7 @@ app.use(cors());
 app.use(helmet());
 
 app.use('/api/items', require('./routes/items'));
+app.use('/api/auth', require('./routes/auth'));
 
 if(process.env.NODE_ENV === 'production'){
   app.use(express.static(path.join(__dirname, 'client', 'build')));
