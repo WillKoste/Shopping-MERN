@@ -3,8 +3,29 @@ const router = express.Router();
 const {check, validationResult} = require('express-validator');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const auth = require('../middleware/auth');
 
 const User = require('../models/User');
+
+// @ Route    GET /api/auth/user
+// @ Desc     Get user data
+// @ Access   Private
+router.get('/user', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+
+    console.log(req.user.id);
+
+    if(!user){
+      return res.status(401).json({success: false, data: 'Authorization Denied'});
+    }
+
+    res.json({success: true, data: user});
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({success: false, data: 'Server Error'})
+  }
+});
 
 // @ Route    POST /api/auth/login
 // @ Desc     Login
@@ -48,7 +69,7 @@ router.post('/login', [
       expiresIn: "10h"
     })
 
-    res.json({success: true, data: token});
+    res.json({success: true, data: token, user: {id: user.id, name: user.name}});
   } catch (err) {
     console.error(err);
     res.status(500).json({success: false, data: 'Server Error'})
@@ -105,18 +126,6 @@ router.post('/register', [
     })
 
     res.json({success: true, data: token});
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({success: false, data: 'Server Error'});
-  }
-});
-
-// @ Route    POST /api/auth/login
-// @ Desc     Login user
-// @ Access   Public
-router.get('/login', async (req, res) => {
-  try {
-    res.send('LOgiN.............. approved ');
   } catch (err) {
     console.error(err);
     res.status(500).json({success: false, data: 'Server Error'});

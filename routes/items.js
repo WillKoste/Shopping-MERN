@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth');
+const {check, validationResult} = require('express-validator');
 
 const Item = require('../models/Item');
 
@@ -45,8 +47,16 @@ router.get('/:id', async (req, res) => {
 
 // @ Route    POST /api/items
 // @ Desc     Create item
-// @ Access   Public
-router.post('/', async (req, res) => {
+// @ Access   Private
+router.post('/', auth, [
+  check('name', 'Item name is required').not().isEmpty()
+], async (req, res) => {
+  const errors = validationResult(req);
+
+  if(!errors.isEmpty()){
+    return res.status(400).json({success: false, errors: errors.array()});
+  }
+  
   try {
     const item = await Item.create(req.body);
 
@@ -59,8 +69,8 @@ router.post('/', async (req, res) => {
 
 // @ Route    PUT /api/items/:id
 // @ Desc     Update item by id
-// @ Access   Public
-router.put('/:id', async (req, res) => {
+// @ Access   Private
+router.put('/:id', auth, async (req, res) => {
   try {
     let item = await Item.findById(req.params.id);
     
@@ -82,8 +92,8 @@ router.put('/:id', async (req, res) => {
 
 // @ Route    DELETE /api/items/:id
 // @ Desc     Delete item by id
-// @ Access   Public
-router.delete('/:id', async (req, res) => {
+// @ Access   Private
+router.delete('/:id', auth, async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
 
