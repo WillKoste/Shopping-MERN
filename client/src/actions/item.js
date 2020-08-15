@@ -4,9 +4,7 @@ import {GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEM_ERROR} from './types';
 export const getItems = () => async dispatch => {
   try {
     const res = await axios.get('http://localhost:5005/api/items');
-
-    console.log(res.data.data);
-
+    
     dispatch({
       type: GET_ITEMS,
       payload: res.data.data
