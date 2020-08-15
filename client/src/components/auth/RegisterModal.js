@@ -60,7 +60,7 @@ const RegisterModal = ({auth: {isAuthenticated}, error}) => {
               <Label for="password">Password</Label>
               <Input type="password" name="password" id="password" onChange={onChange} />
             </FormGroup>
-            <Button color="secondary" style={{marginTop:'2rem'}} block >Register</Button>
+            <Button color="secondary" style={{marginTop:'1.4rem'}} block >Register</Button>
           </Form>
         </ModalBody>
       </Modal>

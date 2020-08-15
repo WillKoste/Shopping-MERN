@@ -14,8 +14,6 @@ router.get('/user', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
 
-    console.log(req.user.id);
-
     if(!user){
       return res.status(401).json({success: false, data: 'Authorization Denied'});
     }

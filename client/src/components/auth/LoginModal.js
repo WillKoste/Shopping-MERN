@@ -12,8 +12,9 @@ import {
   Input,
   NavLink
 } from 'reactstrap';
+import {login} from '../../actions/auth';
 
-const LoginModal = ({auth: {isAuthenticated}, error}) => {
+const LoginModal = ({auth: {isAuthenticated}, error, login}) => {
   const [formData, setFormData] = useState({
     modal: false,
     email: '',
@@ -35,6 +36,7 @@ const LoginModal = ({auth: {isAuthenticated}, error}) => {
 
   const onSubmit = e => {
     e.preventDefault();
+    login(formData.email, formData.password);
     closeModal();
   }
 
@@ -46,7 +48,7 @@ const LoginModal = ({auth: {isAuthenticated}, error}) => {
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Login</ModalHeader>
         <ModalBody>
-          <Form onSubmit={onSubmit}>
+          <Form onSubmit={e => onSubmit(e)}>
             <FormGroup>
               <Label for="email">Email</Label>
               <Input type="email" name="email" id="email" onChange={onChange} />
@@ -55,7 +57,7 @@ const LoginModal = ({auth: {isAuthenticated}, error}) => {
               <Label for="password">Password</Label>
               <Input type="password" name="password" id="password" onChange={onChange} />
             </FormGroup>
-            <Button color="secondary" style={{marginTop:'2rem'}} block >Sign In</Button>
+            <Button color="secondary" style={{marginTop:'1.4rem'}} block >Sign In</Button>
           </Form>
         </ModalBody>
       </Modal>
@@ -65,7 +67,8 @@ const LoginModal = ({auth: {isAuthenticated}, error}) => {
 
 LoginModal.propTypes = {
   auth: PropTypes.object.isRequired,
-  error: PropTypes.object.isRequired
+  error: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -73,4 +76,4 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect(mapStateToProps, {})(LoginModal);
+export default connect(mapStateToProps, {login})(LoginModal);
