@@ -5,7 +5,7 @@ import {Container, ListGroup, ListGroupItem, Button, Spinner} from 'reactstrap';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {getItems, deleteItem} from '../../actions/item';
 
-const ShoppingList = ({item, getItems, deleteItem}) => {
+const ShoppingList = ({item, getItems, deleteItem, auth: {isAuthenticated}}) => {
   useEffect(() => {
     getItems()
   }, [getItems]);
@@ -18,7 +18,7 @@ const ShoppingList = ({item, getItems, deleteItem}) => {
   
   return (
     <Fragment>
-      <Container>
+      {isAuthenticated ? <Container>
         <ListGroup>
           {item.loading ? <Spinner className="m-auto" /> : <TransitionGroup className="shopping-list">
             {items.map(({_id, name}) => (
@@ -31,7 +31,7 @@ const ShoppingList = ({item, getItems, deleteItem}) => {
             ))}
           </TransitionGroup>}
         </ListGroup>
-      </Container>
+      </Container> : null}
     </Fragment>
   )
 }
@@ -43,7 +43,8 @@ ShoppingList.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  item: state.item
+  item: state.item,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, {getItems, deleteItem})(ShoppingList);

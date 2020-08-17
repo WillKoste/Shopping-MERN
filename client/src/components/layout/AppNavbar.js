@@ -11,6 +11,7 @@ import {
 } from 'reactstrap';
 import RegisterModal from '../auth/RegisterModal';
 import LoginModal from '../auth/LoginModal';
+import Logout from '../auth/Logout';
 
 const AppNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +30,9 @@ const AppNavbar = () => {
               </NavItem>
               <NavItem>
                 <LoginModal />
+              </NavItem>
+              <NavItem>
+                <Logout />
               </NavItem>
             </Nav>
           </Collapse>

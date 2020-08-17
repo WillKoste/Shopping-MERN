@@ -49,3 +49,41 @@ export const login = (email, password) => async dispatch => {
     });
   }
 }
+
+export const register = formData => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  const body = JSON.stringify(formData);
+  try {
+    const res = await axios.post('http://localhost:5005/api/auth/register', body, config);
+
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: res.data
+    });
+
+    dispatch(loadUser());
+  } catch (err) {
+    dispatch({
+      type: REGISTER_FAIL,
+      payload: err.response.data
+    });
+  }
+}
+
+export const logout = () => async dispatch => {
+  try {
+    dispatch({
+      type: LOGOUT_SUCCESS
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+      payload: err.response.data
+    });
+  }
+}

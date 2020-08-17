@@ -33,11 +33,13 @@ export default function(state = initialState, action){
     case REGISTER_FAIL:
     case AUTH_ERROR:
     case LOGOUT_SUCCESS:
+      localStorage.removeItem('token');
       return {
         ...state,
         isAuthenticated: false,
         isLoading: false,
-        token: null
+        token: null,
+        user: null
       }
     default:
       return state;

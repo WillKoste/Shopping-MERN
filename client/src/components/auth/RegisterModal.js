@@ -12,8 +12,9 @@ import {
   Input,
   NavLink
 } from 'reactstrap';
+import {register} from '../../actions/auth';
 
-const RegisterModal = ({auth: {isAuthenticated}, error}) => {
+const RegisterModal = ({auth: {isAuthenticated}, error, register}) => {
   const [formData, setFormData] = useState({
     modal: false,
     name: '',
@@ -36,6 +37,7 @@ const RegisterModal = ({auth: {isAuthenticated}, error}) => {
 
   const onSubmit = e => {
     e.preventDefault();
+    register(formData);
     closeModal();
   }
 
@@ -70,7 +72,8 @@ const RegisterModal = ({auth: {isAuthenticated}, error}) => {
 
 RegisterModal.propTypes = {
   auth: PropTypes.object.isRequired,
-  error: PropTypes.object.isRequired
+  error: PropTypes.object.isRequired,
+  register: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -78,4 +81,4 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect(mapStateToProps, {})(RegisterModal);
+export default connect(mapStateToProps, {register})(RegisterModal);
